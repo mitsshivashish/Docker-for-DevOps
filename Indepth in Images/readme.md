@@ -100,3 +100,60 @@ This makes images:
 - Easier to maintain
 - Easier to rebuild
 
+## Container Changes
+
+Copy a file into a running container:
+
+    docker cp ./additional.txt <container>:/usr/src/app/
+
+View filesystem changes:
+
+    docker diff <container>
+
+Change indicators:
+
+    A → Added
+    D → Deleted
+    C → Changed
+
+## Docker Commit
+
+Create a new image from a container:
+
+    docker commit <container> <new-image>
+
+Example:
+
+    docker commit container1 hello-docker-additional
+
+> `docker commit` creates a new image layer, but using a `Dockerfile` is the preferred approach for maintaining image changes.
+
+## Multiple Dockerfiles
+
+You can have multiple Dockerfiles in the same project:
+
+    Dockerfile
+    Dockerfile.testing
+    Dockerfile.production
+
+Build using a specific Dockerfile:
+
+    docker build -t tester -f Dockerfile.testing .
+
+## Quick Cheatsheet
+
+| Task | Command |
+|---|---|
+| Search Docker Hub | `docker search <image>` |
+| Pull image | `docker pull <image>` |
+| Pull specific tag | `docker pull <image>:<tag>` |
+| Tag image | `docker tag <source> <target>` |
+| List images | `docker image ls` |
+| Build image | `docker build -t <name> .` |
+| Build with specific Dockerfile | `docker build -t <name> -f <Dockerfile> .` |
+| Run image | `docker run <image>` |
+| Copy file to container | `docker cp <file> <container>:<path>` |
+| Check container changes | `docker diff <container>` |
+| Create image from container | `docker commit <container> <image>` |
+
+> **Remember:** Dockerfile → Image → Container. Use tags for versions, layers for efficient builds, and Dockerfiles for reproducible image creation.
