@@ -157,3 +157,4 @@ Build using a specific Dockerfile:
 | Create image from container | `docker commit <container> <image>` |
 
 > **Remember:** Dockerfile → Image → Container. Use tags for versions, layers for efficient builds, and Dockerfiles for reproducible image creation.
+in main
