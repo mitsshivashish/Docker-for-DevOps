@@ -46,4 +46,6 @@ Remove all unused containers and images to clean the Docker daemon.
 
 ### `docker ps -a`
 
+### `docker image ls`
+
 ![Docker containers after cleanup](./images/docker-ps-a-cleanup.png)
