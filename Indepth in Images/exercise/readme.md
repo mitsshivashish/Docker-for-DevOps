@@ -10,8 +10,8 @@ Every 10 seconds, a **secret message** appears.
 
 ### Commands Used
 
-    docker run -d --name secret-message devopsdockeruh/simple-web-service:ubuntu
-    docker exec -it secret-message bash
+    docker run -d --name logger_mode devopsdockeruh/simple-web-service:ubuntu
+    docker exec -it logger_mode bash
     tail -f ./text.log
 
 ### Output
