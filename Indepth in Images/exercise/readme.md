@@ -17,3 +17,36 @@ Every 10 seconds, a **secret message** appears.
 ### Output
 
 ![Secret message output](./images/secret-message.png)
+
+
+
+# Docker Exercise 1.4 - Missing Dependencies
+
+## Question
+
+Start an Ubuntu container and run the given script. The script uses `curl` to access a website, but `curl` is missing.
+
+## Answer
+
+### i) Command Used to Start the Process
+
+    docker run -it ubuntu sh -c 'while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
+
+### ii) Commands Used to Fix the Problem
+
+Install `curl` inside the running container:
+
+    docker exec -it <container_id_or_name> bash
+
+    apt-get update
+    apt-get install -y curl
+
+Then enter:
+
+    helsinki.fi
+
+### Output
+
+![Initial output](./images/missing-curl.png)
+
+![Fixed output](./images/curl-working.png)
