@@ -47,10 +47,18 @@ Then enter:
 
 ### Output
 
+### docker exec -it logger_mode bash
+
 ![Initial output](./images/missing-curl.png)
+
+### apt-get update
 
 ![command 1](./images/apt-update.png)
 
+### apt-get install -y curl
+
 ![command 2](./images/curl-install.png)
+
+### sh -c 'while true; do echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website; done'
 
 ![Fixed output](./images/curl-working.png)
