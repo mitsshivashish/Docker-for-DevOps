@@ -49,4 +49,8 @@ Then enter:
 
 ![Initial output](./images/missing-curl.png)
 
+![command 1](./images/apt-update.png)
+
+![command 2](./images/curl-install.png)
+
 ![Fixed output](./images/curl-working.png)
