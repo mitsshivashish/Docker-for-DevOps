@@ -100,16 +100,24 @@ Create a Docker image based on `ubuntu:24.04` that:
 
 ## Build & Run
 
-    docker build -t curler .
-    docker run -it curler
+    docker build -t tester .
+    docker run -it tester
 
 ## Output
 
+#### docker build -t tester -f Dockerfile.curler
+
 ![Dockerfile](./images/Dockerfile.png)
+
+#### docker image ls
 
 ![Build](./images/docker-build.png)
 
+#### docker ps
+
 ![Run](./images/docker-run.png)
+
+#### docker run -it tester:lastest
 
 ![Output](./images/docker-output.png)
 
