@@ -105,7 +105,7 @@ Create a Docker image based on `ubuntu:24.04` that:
 
 ## Output
 
-![Dockerfile](./images/dockerfile.png)
+![Dockerfile](./images/Dockerfile.png)
 
 ![Build](./images/docker-build.png)
 
