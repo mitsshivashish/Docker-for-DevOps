@@ -21,3 +21,7 @@ Start the container with a **bind mount** so that `text.log` is created and upda
     docker run -v "${PWD}/logs:/usr/src/app" devopsdockeruh/simple-web-service
 
 The generated `text.log` file will appear inside the local `logs` directory.
+
+### Output
+
+![Command Output](./images/volumes-output.png)
