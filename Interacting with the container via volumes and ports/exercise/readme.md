@@ -48,3 +48,7 @@ Then open:
     http://localhost:8080
 
 > `-p 8080:8080` maps **host port 8080 → container port 8080**.
+
+### Output
+
+![Open ports output](./images/open-ports.png)
