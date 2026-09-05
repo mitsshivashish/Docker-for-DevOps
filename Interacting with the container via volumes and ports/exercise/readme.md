@@ -25,3 +25,26 @@ The generated `text.log` file will appear inside the local `logs` directory.
 ### Output
 
 ![Command Output](./images/volumes-output.png)
+
+
+# Docker Exercise 1.10 - Ports Open
+
+## Question
+
+The image `devopsdockeruh/simple-web-service` starts a web service on port `8080` when given the argument `server`.
+
+Use the `-p` flag to make the service accessible through:
+
+    http://localhost:8080
+
+### Answer
+
+Start the service with:
+
+    docker run -p 8080:8080 devopsdockeruh/simple-web-service server
+
+Then open:
+
+    http://localhost:8080
+
+> `-p 8080:8080` maps **host port 8080 → container port 8080**.
