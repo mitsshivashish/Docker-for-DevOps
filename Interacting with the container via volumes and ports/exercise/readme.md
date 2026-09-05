@@ -31,6 +31,8 @@ The generated `text.log` file will appear inside the local `logs` directory.
 
 ## Question
 
+![Question 1.10](./images/question-1.10.png)
+
 The image `devopsdockeruh/simple-web-service` starts a web service on port `8080` when given the argument `server`.
 
 Use the `-p` flag to make the service accessible through:
