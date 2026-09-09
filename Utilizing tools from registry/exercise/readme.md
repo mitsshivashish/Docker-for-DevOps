@@ -113,6 +113,110 @@ The application should display the success message once it has started accepting
 
 ## Commands Summary
 
+# Exercise 1.13 — Hello Backend
+
+## Project
+
+Example Backend:
+
+https://github.com/docker-hy/material-applications/tree/main/example-backend
+
+The goal is to create a Dockerfile for the backend and run it with port `8080` published.
+
+After starting the container, open:
+
+    http://localhost:8080/ping
+
+Expected response:
+
+    pong
+
+## Dockerfile
+
+    FROM ubuntu:latest
+
+    # Copy the project into the container
+    COPY . .
+
+    # Install required packages and Go 1.16.3
+    RUN apt-get update && \
+        apt-get install -y wget gcc && \
+        rm -rf /usr/local/go && \
+        wget -c https://golang.org/dl/go1.16.3.linux-amd64.tar.gz && \
+        tar -C /usr/local -xzf go1.16.3.linux-amd64.tar.gz
+
+    # Add Go to PATH
+    ENV PATH /usr/local/go/bin:$PATH
+
+    # Build the application
+    RUN go build
+
+    # Run tests
+    RUN go test
+
+    # Start the server
+    CMD ./server
+
+    # Application port
+    EXPOSE 8080
+
+## Build the Image
+
+    docker build -t hello-backend .
+
+### M1/M2/M-series Mac
+
+Use the following when building on an ARM-based Mac:
+
+    docker build --platform linux/amd64 -t hello-backend .
+
+## Run the Container
+
+    docker run -d -p 8080:8080 hello-backend
+
+## Test
+
+Open in your browser:
+
+    http://localhost:8080/ping
+
+Or use:
+
+    curl http://localhost:8080/ping
+
+Expected output:
+
+    pong
+
+## Key Dockerfile Instructions
+
+| Instruction | Purpose |
+|---|---|
+| `FROM ubuntu:latest` | Uses Ubuntu as the base image |
+| `COPY . .` | Copies the backend project into the image |
+| `RUN` | Installs Go and builds/tests the application |
+| `ENV PATH` | Makes Go available through the PATH |
+| `CMD` | Starts the backend server |
+| `EXPOSE 8080` | Documents the application's port |
+| `-p 8080:8080` | Publishes container port 8080 to the host |
+
+## Commands Summary
+
+    docker build -t hello-backend .
+    docker run -d -p 8080:8080 hello-backend
+
+For M1/M2/M-series Mac:
+
+    docker build --platform linux/amd64 -t hello-backend .
+    docker run -d -p 8080:8080 hello-backend
+
+### Dockerfile
+![Dockerfile](./images/dockerfile-for-hellobackend.png)
+
+### Output
+![Output](./images/output-for-hellobackend.png)
+![server image](./images/server-image-for-hellobackend.png)
+
     docker build -t example-frontend .
     docker run -p 5001:5001 example-frontend
 
