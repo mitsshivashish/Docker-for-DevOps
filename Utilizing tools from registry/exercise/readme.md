@@ -113,6 +113,13 @@ The application should display the success message once it has started accepting
 
 ## Commands Summary
 
+    docker build -t example-frontend .
+    docker run -p 5001:5001 example-frontend
+
+![Dockerfile](./images/dockerfile-for-hellofrontend.png)
+
+
+![output](./images/output-for-hellofrontend.png)
 # Exercise 1.13 — Hello Backend
 
 ## Project
@@ -216,9 +223,3 @@ For M1/M2/M-series Mac:
 ### Output
 ![Output](./images/output-for-hellobackend.png)
 ![server image](./images/server-image-for-hellobackend.png)
-
-    docker build -t example-frontend .
-    docker run -p 5001:5001 example-frontend
-
-![Dockerfile](./images/dockerfile-for-hellofrontend.png)
-![output](./images/output-for-hellofrontend.png)
