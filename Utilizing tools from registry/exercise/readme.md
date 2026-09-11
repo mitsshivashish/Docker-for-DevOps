@@ -223,3 +223,191 @@ For M1/M2/M-series Mac:
 ### Output
 ![Output](./images/output-for-hellobackend.png)
 ![server image](./images/server-image-for-hellobackend.png)
+
+
+# Exercise 1.14 — Environment
+
+## Objective
+
+Run both the **frontend** and **backend** containers with the correct ports and configure them using Dockerfile `ENV` variables.
+
+The frontend runs in the browser and sends the request to:
+
+    backend_url/ping
+
+The configuration is correct when the **Exercise 1.14** button turns green.
+
+## Frontend Dockerfile
+
+    FROM ubuntu:latest
+
+    WORKDIR /usr/src
+
+    COPY . .
+
+    # Backend URL used by the frontend browser code
+    ENV REACT_APP_BACKEND_URL http://localhost:8080/
+
+    RUN apt-get update && \
+        apt-get install -y curl && \
+        curl https://deb.nodesource.com/setup_14.x | bash - && \
+        apt-get install -y nodejs
+
+    RUN apt-get install -y npm && \
+        npm install && \
+        npm run build && \
+        npm install -g serve
+
+    CMD ["npx", "serve", "-s", "-l", "5000", "build"]
+
+    EXPOSE 5000
+
+## Backend Dockerfile
+
+    FROM ubuntu:latest
+
+    COPY . .
+
+    RUN apt-get update && \
+        apt-get install -y wget gcc && \
+        rm -rf /usr/local/go && \
+        wget -c https://golang.org/dl/go1.16.3.linux-amd64.tar.gz && \
+        tar -C /usr/local -xzf go1.16.3.linux-amd64.tar.gz
+
+    # Add Go to PATH
+    ENV PATH /usr/local/go/bin:$PATH
+
+    # Allow requests from the frontend
+    ENV REQUEST_ORIGIN http://localhost:5000
+
+    RUN go build
+
+    RUN go test
+
+    CMD ./server
+
+    EXPOSE 8080
+
+## Build the Backend
+
+    cd example-backend
+    docker build -t hello-backend .
+
+## Run the Backend
+
+    docker run -d -p 8080:8080 hello-backend
+
+The backend is now available at:
+
+    http://localhost:8080
+
+Test it with:
+
+    http://localhost:8080/ping
+
+Expected response:
+
+    pong
+
+## Build the Frontend
+
+    cd example-frontend
+    docker build -t hello-frontend .
+
+## Run the Frontend
+
+    docker run -d -p 5000:5000 hello-frontend
+
+Open:
+
+    http://localhost:5000
+
+Then press the **1.14** button.
+
+The button should turn **green**.
+
+## Environment Variables
+
+### Frontend
+
+    ENV REACT_APP_BACKEND_URL http://localhost:8080/
+
+The frontend README states that `REACT_APP_BACKEND_URL` controls the API path used when the frontend is built. :contentReference[oaicite:0]{index=0}
+
+### Backend
+
+    ENV REQUEST_ORIGIN http://localhost:5000
+
+The backend README states that `REQUEST_ORIGIN` is used for the CORS check. :contentReference[oaicite:1]{index=1}
+
+## Why localhost?
+
+The frontend JavaScript is executed by the **browser**, not inside the frontend container.
+
+Therefore:
+
+    Browser
+       |
+       | http://localhost:5000
+       v
+    Frontend Container
+       |
+       | Browser sends request to http://localhost:8080/ping
+       v
+    Backend Container
+
+The frontend must therefore use:
+
+    http://localhost:8080/
+
+and the backend must allow:
+
+    http://localhost:5000
+
+## Commands Summary
+
+### Backend
+
+    cd example-backend
+    docker build -t hello-backend .
+    docker run -d -p 8080:8080 hello-backend
+
+### Frontend
+
+    cd example-frontend
+    docker build -t hello-frontend .
+    docker run -d -p 5000:5000 hello-frontend
+
+## Important
+
+- Do not modify the application source code.
+- `EXPOSE` documents the container port.
+- `-p` publishes the port to the host.
+- `REACT_APP_BACKEND_URL` is needed by the frontend.
+- `REQUEST_ORIGIN` is needed by the backend for CORS.
+- Keep the browser Developer Tools (`F12`) open, especially the **Console** and **Network** tabs, when debugging.
+
+## Quick Reference
+
+    Frontend port  : 5000
+    Backend port   : 8080
+
+    Frontend ENV:
+    REACT_APP_BACKEND_URL=http://localhost:8080/
+
+    Backend ENV:
+    REQUEST_ORIGIN=http://localhost:5000
+
+    Frontend URL:
+    http://localhost:5000
+
+    Backend test:
+    http://localhost:8080/ping
+
+![env-Dockerfile-for-hellofrontend](./images/env-dockerfile-for-hellofrontend.png)
+
+
+![env-Dockerfile-for-hellobackend](./images/env-dockerfile-for-hellobackend.png)
+
+
+![output](./images/output-for-ex1.14.png)
